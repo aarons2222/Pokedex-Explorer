@@ -10,7 +10,8 @@ import Foundation
 class HomeViewModel: ObservableObject {
     @Published private(set) var pokemons: [Pokemon] = []
     @Published var searchText: String = ""
-    
+    @Published var sortingOrder: SortingOrder = .byID
+
     private let networkManager = NetworkManager.shared
     
     init() {
@@ -33,11 +34,30 @@ class HomeViewModel: ObservableObject {
         }
     }
     
+
+
     var filteredPokemons: [Pokemon] {
         if searchText.isEmpty {
-            return pokemons
+            return sortPokemons(pokemons, order: sortingOrder) // Sort the whole array if search text is empty
         } else {
-            return pokemons.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            let filtered = pokemons.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return sortPokemons(filtered, order: sortingOrder) // Sort filtered array
         }
     }
+
+    func sortPokemons(_ pokemons: [Pokemon], order: SortingOrder) -> [Pokemon] {
+        switch order {
+            case .ascending:
+                return pokemons.sorted { $0.name.lowercased() < $1.name.lowercased() }
+            case .descending:
+                return pokemons.sorted { $0.name.lowercased() > $1.name.lowercased() }
+            case .random:
+                return pokemons.shuffled()
+            
+            case .byID:
+                return pokemons
+        }
+        
+    }
+
 }

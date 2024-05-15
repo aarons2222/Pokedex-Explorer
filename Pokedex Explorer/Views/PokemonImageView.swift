@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Kingfisher
+
 
 struct PokemonImageView: View {
     let id: Int
@@ -19,11 +21,15 @@ struct PokemonImageView: View {
     private func asyncPokemonImage(id: Int) -> some View {
         let imageURL = URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png")!
         
-        return AsyncImage(url: imageURL) { image in
-            image.resizable()
-        } placeholder: {
-            ProgressView()
-        }
+        return KFImage(imageURL)
+            .resizable()
+        
+        
+//        AsyncImage(url: imageURL) { image in
+//            image.resizable()
+//        } placeholder: {
+//            ProgressView()
+//        }
         .frame(width: frame, height: frame)
     }
 }
