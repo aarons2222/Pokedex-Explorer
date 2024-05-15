@@ -16,17 +16,45 @@ struct HomeView: View {
             if vm.filteredPokemons.isEmpty {
               ContentUnavailableView("No Pokemons named \(vm.searchText) found", image: "bolt.trianglebadge.exclamationmark")
             } else {
-                List {
-                    ForEach(vm.filteredPokemons, id: \.name) { pokemon in
-                        let inde = getPokemonNumber(from: pokemon.url)!
-                        NavigationLink(destination: DetailView(id: inde)) {
-                            HStack {
-                                PokemonImageView(id: getPokemonNumber(from: pokemon.url)!, frame: 130)
-                                Text(pokemon.name)
+                
+                
+                ScrollView(.vertical) {
+                    LazyVGrid(columns: Array(repeating: GridItem(), count: 2), content: {
+                        
+                        
+                        ForEach(vm.filteredPokemons, id: \.name) { pokemon in
+
+                        
+                            let inde = getPokemonNumber(from: pokemon.url)!
+                            NavigationLink(destination: DetailView(id: inde)) {
+                            CardView(name: pokemon.name, url: pokemon.url)
                             }
+                            
                         }
-                    }
+                    })
+                    .padding(15)
                 }
+                .scrollIndicators(.hidden)
+                .scrollClipDisabled()
+                .mask {
+                    Rectangle()
+                        .padding(.bottom, -100)
+                }
+
+                
+                
+                
+//                List {
+//                    ForEach(vm.filteredPokemons, id: \.name) { pokemon in
+//                        let inde = getPokemonNumber(from: pokemon.url)!
+//                        NavigationLink(destination: DetailView(id: inde)) {
+//                            HStack {
+//                                PokemonImageView(id: getPokemonNumber(from: pokemon.url)!, frame: 130)
+//                                Text(pokemon.name)
+//                            }
+//                        }
+//                    }
+//                }
             }
         
         }
@@ -58,6 +86,40 @@ struct HomeView: View {
         
         return number
     }
+    
+    
+    
+    
+    @ViewBuilder
+    func CardView(name: String, url: String) -> some View {
+        
+        
+        RoundedRectangle(cornerRadius: 15)
+            .fill(ColorUtil.colorForName(name).gradient)
+            .frame(height: 150)
+            .overlay {
+                VStack(alignment: .leading) {
+                    Text(name.firstUppercased)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color.white)
+                        .padding(15)
+      
+                    
+                    Spacer(minLength: 0)
+                    
+                    PokemonImageView(id: getPokemonNumber(from: url)!, frame: 110)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
+                .padding(0)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        
+    }
+
+    
+    
+
 
 
 }

@@ -56,21 +56,8 @@ struct DetailView: View {
                     ForEach(vm.pokemonDetails.stats, id: \.stat.name) { stat in
                         VStack {
                             
-                            CardView(title: stat.stat.name.capitalized, min: stat.baseStat, max: stat.maximumStat)
-                            
-                            
-//                            HStack(spacing: 25) {
-//                                
-//                                
-//                                Group {
-//                                    Text(stat.stat.name.capitalized)
-//                                        .fontWeight(.bold)
-//                                        .frame(minWidth: 60, alignment: .leading)
-//                                    Text("\(stat.baseStat)")
-//                                        .frame(minWidth: 40)
-//                                }
-//                             ProgressBar(value: Float(stat.baseStat) / Float(stat.maximumStat))
-//                            }
+                            CardView(name: vm.pokemonDetails.name, statName: stat.stat.name.capitalized, min: stat.baseStat, max: stat.maximumStat)
+ 
                         }
                     }
                 }
@@ -88,11 +75,11 @@ struct DetailView: View {
     
     
     @ViewBuilder
-    func CardView(title: String, min: Int, max: Int) -> some View {
+    func CardView(name: String, statName: String, min: Int, max: Int) -> some View {
         
         
         RoundedRectangle(cornerRadius: 15)
-            .fill(.blue.gradient)
+            .fill(ColorUtil.colorForName(name).gradient)
             .frame(height: 90)
             .overlay(alignment: .leading) {
                 HStack(spacing: 12) {
@@ -108,7 +95,7 @@ struct DetailView: View {
                     VStack(alignment: .leading, spacing: 10, content: {
 
                         
-                        Text(title)
+                        Text(statName)
                             .font(.title3)
                             .fontWeight(.semibold)
                         
@@ -139,23 +126,5 @@ struct DetailView: View {
 }
 
 
-struct ProgressBar: View {
-    var value: Float
-    
-    var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(width: geo.size.width)
-                    .opacity(0.3)
-                    .foregroundColor(Color(UIColor.systemTeal))
-                Rectangle()
-                    .foregroundColor(Color.blue)
-                    .frame(width: CGFloat(self.value) * geo.size.width)
-            }
-            .cornerRadius(45)
-        }
-        .frame(height: 10)
-        .padding()
-    }
-}
+
+

@@ -35,9 +35,11 @@ class HomeViewModel: ObservableObject {
     
     var filteredPokemons: [Pokemon] {
         if searchText.isEmpty {
-            return pokemons
+            return pokemons.shuffled() // Return shuffled array if search text is empty
         } else {
-            return pokemons.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            let filtered = pokemons.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return filtered.shuffled() // Return shuffled filtered array
         }
     }
+
 }
