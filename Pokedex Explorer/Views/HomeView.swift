@@ -9,42 +9,57 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var vm = HomeViewModel()
-    
+
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(Array(vm.filteredPokemons.enumerated()), id: \.element.name) { index, pokemon in
-             //       NavigationLink(destination: DetailView(pokemonUrl: pokemon.url, name: pokemon.name)) {
-                    
-                    NavigationLink(destination: Text("aaa")) {
-                        HStack{
-                            
-                            asyncPokemonImage(index: index + 1)
-                            
-                            Text(pokemon.name)
+            if vm.filteredPokemons.isEmpty {
+              ContentUnavailableView("No Pokemons named \(vm.searchText) found", image: "bolt.trianglebadge.exclamationmark")
+            } else {
+                List {
+                    ForEach(vm.filteredPokemons, id: \.name) { pokemon in
+                        let inde = getPokemonNumber(from: pokemon.url)!
+                        NavigationLink(destination: DetailView(id: inde)) {
+                            HStack {
+                                PokemonImageView(id: getPokemonNumber(from: pokemon.url)!, frame: 130)
+                                Text(pokemon.name)
+                            }
                         }
                     }
                 }
             }
-            .navigationTitle("Pokemon")
-            .searchable(text: $vm.searchText)
-        }
-    }
-    
-    
-    
-    
-    func asyncPokemonImage(index: Int) -> some View {
-        let imageURL = URL(string: vm.pokemonImageURL(ID: index + 1))!
         
-        return AsyncImage(url: imageURL) { image in
-            image.resizable()
-        } placeholder: {
-            ProgressView()
         }
-        .frame(width: 100, height: 100)
+        
+        .navigationTitle("Pokemon")
+
+        .searchable(text: $vm.searchText)
+
     }
+    
+    
+    
+    
+    func getPokemonNumber(from url: String) -> Int? {
+        // Remove trailing slash if present
+        let trimmedURL = url.hasSuffix("/") ? String(url.dropLast()) : url
+        // Split the URL components by "/"
+        let components = trimmedURL.components(separatedBy: "/")
+        
+        // Guard against invalid URL format
+        guard let lastComponent = components.last else {
+            return nil
+        }
+        
+        // Attempt to parse the last component as an integer
+        guard let number = Int(lastComponent) else {
+            return nil
+        }
+        
+        return number
+    }
+
+
 }
 
 
