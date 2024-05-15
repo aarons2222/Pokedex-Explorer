@@ -37,5 +37,50 @@ struct ColorUtil{
                 return .gray.opacity(0.4)
         }
     }
+    
+    
+    static func getColorForType(type: String) -> Color {
+        switch type {
+        case "normal":
+            return Color.gray
+        case "fighting":
+            return Color.red
+        case "flying":
+            return Color.blue
+        case "poison":
+            return Color.purple
+        case "ground":
+            return Color(hue: 0.09, saturation: 0.67, brightness: 0.67)
+        case "rock":
+            return Color(hue: 0.12, saturation: 0.80, brightness: 0.72)
+        case "bug":
+            return Color(hue: 0.17, saturation: 0.59, brightness: 0.72)
+        case "ghost":
+            return Color(hue: 0.75, saturation: 0.33, brightness: 0.83)
+        case "steel":
+            return Color(hue: 0.58, saturation: 0.39, brightness: 0.77)
+        case "fire":
+            return Color.orange
+        case "water":
+            return Color.blue
+        case "grass":
+            return Color.green
+        case "electric":
+            return Color.yellow
+        case "psychic":
+            return Color(hue: 0.94, saturation: 0.32, brightness: 0.84)
+        case "ice":
+            return Color(hue: 0.53, saturation: 0.57, brightness: 0.98)
+        case "dragon":
+            return Color(hue: 0.66, saturation: 0.75, brightness: 0.82)
+        case "dark":
+            return Color.black
+        case "fairy":
+            return Color.pink
+        default:
+            return Color.gray
+        }
+    }
+
 }
 
