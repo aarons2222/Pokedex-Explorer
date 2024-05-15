@@ -6,11 +6,12 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 struct PokemonResponse: Codable {
     let results: [Pokemon]
 }
+
 
 struct Pokemon: Codable, Equatable {
     let name: String

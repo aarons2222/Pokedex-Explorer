@@ -10,17 +10,14 @@ import Foundation
 enum APIEndpoint {
     static let baseUrl = "https://pokeapi.co/api/v2/"
     
-    case pokemonList
-    case pokemonDetail(id: Int)
+
     
-    var url: URL {
-        switch self {
-        case .pokemonList:
-            return URL(string: "\(APIEndpoint.baseUrl)pokemon?limit=150")!
-        case .pokemonDetail(let id):
-            return URL(string: "\(APIEndpoint.baseUrl)pokemon/\(id)")!
-        }
-    }
+    
+    
+    // URL for sprites
+    static func imageURL(forID id: Int) -> String {
+          return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/\(id).png"
+      }
 }
 
 
