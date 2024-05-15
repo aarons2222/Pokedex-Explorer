@@ -9,19 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     var body: some View {
-   
-        
-    
-        TabView{
-            HomeView()
-                .tabItem {
-                    Label("Pokemon", systemImage: "list.dash")
-                }
-            FavouritesView()
-                .tabItem {
-                    Label("Favourites", systemImage: "star")
-                }
-        }
+        HomeView()
     }
 }
 
