@@ -16,9 +16,9 @@
 		937710312BF3657200AC5535 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710302BF3657200AC5535 /* NetworkManager.swift */; };
 		937710332BF368BA00AC5535 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710322BF368BA00AC5535 /* HomeView.swift */; };
 		937710352BF368D800AC5535 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710342BF368D800AC5535 /* MainView.swift */; };
-		937710372BF368E300AC5535 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710362BF368E300AC5535 /* DetailView.swift */; };
-		937710392BF368FE00AC5535 /* FavouritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710382BF368FE00AC5535 /* FavouritesView.swift */; };
 		9377103C2BF36B9100AC5535 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377103B2BF36B9100AC5535 /* HomeViewModel.swift */; };
+		9377103E2BF3712500AC5535 /* Pokemon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377103D2BF3712500AC5535 /* Pokemon.swift */; };
+		937710422BF3759B00AC5535 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710412BF3759B00AC5535 /* Endpoints.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,9 +52,9 @@
 		937710302BF3657200AC5535 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		937710322BF368BA00AC5535 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		937710342BF368D800AC5535 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		937710362BF368E300AC5535 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
-		937710382BF368FE00AC5535 /* FavouritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesView.swift; sourceTree = "<group>"; };
 		9377103B2BF36B9100AC5535 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		9377103D2BF3712500AC5535 /* Pokemon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pokemon.swift; sourceTree = "<group>"; };
+		937710412BF3759B00AC5535 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,8 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				937710322BF368BA00AC5535 /* HomeView.swift */,
-				937710362BF368E300AC5535 /* DetailView.swift */,
-				937710382BF368FE00AC5535 /* FavouritesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -165,6 +163,7 @@
 		9377102D2BF2BAD800AC5535 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9377103D2BF3712500AC5535 /* Pokemon.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -180,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				937710302BF3657200AC5535 /* NetworkManager.swift */,
+				937710412BF3759B00AC5535 /* Endpoints.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -315,11 +315,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				937710312BF3657200AC5535 /* NetworkManager.swift in Sources */,
+				9377103E2BF3712500AC5535 /* Pokemon.swift in Sources */,
 				937710332BF368BA00AC5535 /* HomeView.swift in Sources */,
 				9377103C2BF36B9100AC5535 /* HomeViewModel.swift in Sources */,
+				937710422BF3759B00AC5535 /* Endpoints.swift in Sources */,
 				937710352BF368D800AC5535 /* MainView.swift in Sources */,
-				937710372BF368E300AC5535 /* DetailView.swift in Sources */,
-				937710392BF368FE00AC5535 /* FavouritesView.swift in Sources */,
 				937710012BF2BA9D00AC5535 /* Pokedex_ExplorerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
