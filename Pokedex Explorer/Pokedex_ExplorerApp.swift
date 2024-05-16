@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import SwiftData
+
 
 @main
 struct Pokedex_ExplorerApp: App {
+    
+     
+
+
+    
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            HomeView()
+             
         }
+   
+
     }
 }

@@ -5,8 +5,6 @@
 //  Created by Aaron Strickland on 15/05/2024.
 //
 
-import Foundation
-
 
 
 struct PokemonDetails: Decodable {
@@ -15,42 +13,35 @@ struct PokemonDetails: Decodable {
     var weight = 0
     var baseExperience = 0
     var types = [Types]()
-    var stats = [Stats]()
+    var stats = [PokemonStat]()
+}
 
+struct PokemonStat: Codable {
+    let baseStat: Int
+    let effort: Int
+    let stat: Stat
     
-    var formattedName: String {
-        if name.count != 0 {
-            return String(Array(name)[0].uppercased() + name.dropFirst())
-        }
-        
-        return ""
+    var maximumStat: Int {
+       if stat.name == "hp" {
+           return baseStat * 2 + 404
+       } else {
+           return Int(Double(baseStat * 2 + 99) * 1.1)
+       }
     }
 }
 
-struct Stats: Decodable {
-    struct Stat: Decodable {
-        var name = ""
-    }
-    
-    var baseStat = 0
-    var stat: Stat
-    
-
-    
-    var maximumStat: Int {
-        if stat.name == "hp" {
-            return baseStat * 2 + 404
-        } else {
-            return Int(Double(baseStat * 2 + 99) * 1.1)
-        }
-    }
+struct Stat: Codable {
+    let name: String
+    let url: String
 }
 
 struct Types: Decodable {
-    struct `Type`: Decodable {
-        var name = ""
-    }
-    
-    var type: Type
+    let slot: Int
+    let type: TypeDetails
+}
+
+struct TypeDetails: Decodable {
+    let name: String
+    let url: String
 }
 
