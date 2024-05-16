@@ -11,6 +11,7 @@ class HomeViewModel: ObservableObject {
     @Published private(set) var pokemons: [Pokemon] = []
     @Published var searchText: String = ""
     @Published var sortingOrder: SortingOrder = .byID
+
     private let networkManager = NetworkManager.shared
     
     init() {
@@ -20,7 +21,7 @@ class HomeViewModel: ObservableObject {
     }
     
     @MainActor
-    public func fetchPokemons() async {
+    private func fetchPokemons() async {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=150") else {
             return
         }

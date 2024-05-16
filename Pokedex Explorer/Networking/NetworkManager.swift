@@ -42,7 +42,6 @@ class NetworkManager: NetworkProtocol {
             // Decode the fetched data
             do {
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
-                print("decodedData \(decodedData))")
                 return decodedData
             } catch {
                 throw NetworkError.decodingError(error)

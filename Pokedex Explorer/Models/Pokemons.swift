@@ -7,23 +7,17 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
+
+
 
 struct PokemonResponse: Codable {
     let results: [Pokemon]
 }
 
 
-struct Pokemon: Codable, Equatable {
+struct Pokemon: Codable {
     let name: String
     let url: String
-
-    enum CodingKeys: String, CodingKey {
-        case name
-        case url
-    }
-
-    init(name: String, url: String) {
-        self.name = name
-        self.url = url
-    }
 }
+

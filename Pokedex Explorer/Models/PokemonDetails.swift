@@ -5,7 +5,7 @@
 //  Created by Aaron Strickland on 15/05/2024.
 //
 
-import Foundation
+
 
 struct PokemonDetails: Decodable {
     var name = ""
@@ -44,3 +44,4 @@ struct TypeDetails: Decodable {
     let name: String
     let url: String
 }
+
