@@ -21,8 +21,9 @@ class HomeViewModel: ObservableObject {
     }
     
     @MainActor
-    private func fetchPokemons() async {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=150") else {
+    public func fetchPokemons() async {
+        guard let url = PokemonAPI.listURL(limit: 150) else {
+            // Handle invalid URL
             return
         }
         

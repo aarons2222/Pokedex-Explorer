@@ -4,7 +4,6 @@
 //
 //  Created by Aaron Strickland on 15/05/2024.
 //
-
 import SwiftUI
 
 struct DetailView: View {
@@ -12,127 +11,98 @@ struct DetailView: View {
     @ObservedObject private var vm = DetailViewModel()
     
     private let id: Int
-    
-    let haptic = UIImpactFeedbackGenerator(style: .light)
-
-
+    private let haptic = UIImpactFeedbackGenerator(style: .light)
     var backgroundColor: Color
-    
+
+    // Initialize DetailView with a background color and Pokémon ID
     init(backgroundColor: Color, id: Int) {
         self.id = id
         self.backgroundColor = backgroundColor
-        
     }
     
     var body: some View {
-        
-        ZStack{
-            
-   
+        ZStack {
+            // Set background color with some opacity
             backgroundColor
                 .opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
-                
             
-   
-        ScrollView {
-
-            VStack() {
-                
-                PokemonImageView(id: id, frame: 200)
-                
-                
-                Text(vm.pokemonDetails.name.firstUppercased)
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.white)
-                
-                
-                
-                
-             
-            
-                HStack {
-                    ForEach(vm.pokemonDetails.types, id: \.type.name) { type in
-                        
-                        VStack {
-                            Text(type.type.name.firstUppercased)
-                                .font(.headline)
-                                .fontWeight(.bold)
-                                .foregroundColor(Color.white)
-                                .background(
-                                    Capsule()
-                                        .fill(ColorUtil.getColorForType(type: type.type.name))
-                                        .frame(width: 100, height: 50)
-                                )
-                        }
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                }
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .padding(.vertical)
-                
-           
-                
-                HStack {
-                 
-                        
-                     
-                    CardView(value: "\(vm.pokemonDetails.height) cm", icon: "ruler")
-                        .frame(minWidth: 0, maxWidth: .infinity)
+            ScrollView {
+                VStack {
+                    // Display Pokémon image
+                    PokemonImageView(id: id, frame: 200)
                     
-                    CardView(value:"\(vm.pokemonDetails.weight) kg", icon: "scalemass")
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                
-                }
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .padding(.vertical)
-                
-                
-           
-               
-         
-                HStack{
-                    Text("Stats")
-                        .font(.title3)
+                    // Display Pokémon name
+                    Text(vm.pokemonDetails.name.firstUppercased)
+                        .font(.title)
                         .fontWeight(.bold)
-                        .foregroundColor(Color.white)
+                        .foregroundColor(.white)
+                    
+                    // Display Pokémon types
+                    HStack {
+                        ForEach(vm.pokemonDetails.types, id: \.type.name) { type in
+                            VStack {
+                                Text(type.type.name.firstUppercased)
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(.white)
+                                    .background(
+                                        Capsule()
+                                            .fill(ColorUtil.getColorForType(type: type.type.name))
+                                            .frame(width: 100, height: 50)
+                                    )
+                            }
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                        }
+                    }
+                    .padding(.vertical)
+                    
+                    // Display height and weight
+                    HStack {
+                        CardView(value: "\(vm.pokemonDetails.height) cm", icon: "ruler")
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                        
+                        CardView(value: "\(vm.pokemonDetails.weight) kg", icon: "scalemass")
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                    }
+                    .padding(.vertical)
+                    
+                    // Display stats header
+                    HStack {
+                        Text("Stats")
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        Spacer()
+                    }
+                    
+                    // Display Pokémon stats
+                    VStack(alignment: .leading, spacing: 20) {
+                        ForEach(vm.pokemonDetails.stats, id: \.stat.name) { stat in
+                            CardView(name: vm.pokemonDetails.name, statName: stat.stat.name.capitalized, min: stat.baseStat, max: stat.maximumStat)
+                        }
+                    }
+                    
                     Spacer()
                 }
-                VStack(alignment: .leading, spacing: 20){
-                    
-                 
-                    
-                    ForEach(vm.pokemonDetails.stats, id: \.stat.name) { stat in
-           
-                            
-                            CardView(name: vm.pokemonDetails.name, statName: stat.stat.name.capitalized, min: stat.baseStat, max: stat.maximumStat)
- 
-                        
-                    }
-                }
-              
-                Spacer()
+                .padding(.horizontal, 25)
             }
-            .padding(.horizontal, 25)
             
-        }
-            
-            VStack{
+            // Header with back button
+            VStack {
                 HeaderView()
                     .padding(.leading)
                 Spacer()
             }
-
+        }
         .navigationBarHidden(true)
         .task {
+            // Fetch Pokémon details when the view appears
             await vm.fetchPokemonDetail(pokemonId: id)
         }
     }
-    }
     
-    
-    
+    /// A view displaying a card with various information.
     @ViewBuilder
     func CardView(value: String? = nil, icon: String? = nil, name: String? = nil, statName: String? = nil, min: Int? = nil, max: Int? = nil) -> some View {
         RoundedRectangle(cornerRadius: 15)
@@ -181,50 +151,27 @@ struct DetailView: View {
             }
     }
     
-    
-    
-
-
-    
+    /// A header view with a back button.
     @ViewBuilder
     func HeaderView() -> some View {
-
-            Button(action: {
-                    haptic.impactOccurred()
-                presentationMode.wrappedValue.dismiss()
+        Button(action: {
+            haptic.impactOccurred()
+            presentationMode.wrappedValue.dismiss()
+        }) {
+            HStack {
+                Image(systemName: "chevron.left")
+                    .resizable()
+                    .frame(width: 11, height: 20)
                 
-            }) {
-                HStack {
-                    Image(systemName: "chevron.left")
-                        .resizable()
-                        .frame(width: 11, height: 20)
-                    
-                    Text("Back")
-                    
-                    Spacer()
-
-                }
-                .foregroundColor(.white)
-
+                Text("Back")
+                
+                Spacer()
             }
-    
+            .foregroundColor(.white)
         }
-    
+    }
 }
-
 
 #Preview {
     DetailView(backgroundColor: Color.red, id: 6)
 }
-
-
-
-
-
-
-
-//
-//
-//
-//
-//
