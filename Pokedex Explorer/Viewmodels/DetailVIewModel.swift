@@ -7,11 +7,12 @@
 
 import Foundation
 
-@MainActor
+
 class DetailViewModel: ObservableObject {
     private let networkManager = NetworkManager.shared
     @Published private(set) var pokemonDetails = PokemonDetails()
 
+    @MainActor
     func fetchPokemonDetail(pokemonId id: Int) async {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon/\(id)") else {
             // Handle invalid URL
