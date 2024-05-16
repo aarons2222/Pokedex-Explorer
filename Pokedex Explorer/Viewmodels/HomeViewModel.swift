@@ -31,6 +31,8 @@ class HomeViewModel: ObservableObject {
             let pokemonResponse: PokemonResponse = try await networkManager.fetchData(from: url)
             pokemons = pokemonResponse.results
         } catch {
+            
+            // handle API call errors here
             print("Error fetching Pokemon data: \(error)")
         }
     }

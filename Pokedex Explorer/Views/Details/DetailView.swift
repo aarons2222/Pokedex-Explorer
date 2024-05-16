@@ -2,13 +2,17 @@
 //  DetailView.swift
 //  Pokedex Explorer
 //
-//  Created by Aaron Strickland on 15/05/2024.
+//  Created by Aaron Strickland on 14/05/2024.
 //
+
+
+
 import SwiftUI
 
 struct DetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject private var vm = DetailViewModel()
+    @StateObject private var errorHandler = ErrorHandler.shared
     
     private let id: Int
     private let haptic = UIImpactFeedbackGenerator(style: .light)
@@ -99,6 +103,15 @@ struct DetailView: View {
         .task {
             // Fetch Pokémon details when the view appears
             await vm.fetchPokemonDetail(pokemonId: id)
+        }
+        .alert(isPresented: $errorHandler.showAlert) {
+            Alert(
+                title: Text("Error"),
+                message: Text(errorHandler.currentError ?? "Unknown error"),
+                dismissButton: .default(Text("OK")) {
+                    errorHandler.alertDismissed()
+                }
+            )
         }
     }
     
