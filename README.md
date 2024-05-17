@@ -42,7 +42,8 @@
 ### Still to do/improvments
 
 1. **More unit tests**
-2. **Accessibility**
-3. **Greater device support**
-4. **Lazy loading of Pokemon**
-5. **Local persistence with SwiftData (I did spend about 3 hours trying to get this working!!!!!!!!! :( ) **
+2. **UI Testing**
+3. **Accessibility**
+4. **Greater device support**
+5. **Lazy loading of Pokemon**
+6. **Local persistence with SwiftData (I did spend about 3 hours trying to get this working!!!!!!!!! :( ) **
