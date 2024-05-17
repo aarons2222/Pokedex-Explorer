@@ -12,9 +12,11 @@ class HomeViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var sortingOrder: SortingOrder = .byID
 
-    private let networkManager = NetworkManager.shared
+    private let networkService: NetworkProtocol
     
-    init() {
+    // Dependency injection through initializer
+    init(networkService: NetworkProtocol = NetworkService.shared) {
+        self.networkService = networkService
         Task {
             await fetchPokemons()
         }
@@ -22,22 +24,19 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     public func fetchPokemons() async {
-        guard let url = PokemonAPI.listURL(limit: 150) else {
+        guard let url = PokemonAPI.listURL(limit: 100) else {
             // Handle invalid URL
             return
         }
         
         do {
-            let pokemonResponse: PokemonResponse = try await networkManager.fetchData(from: url)
+            let pokemonResponse: PokemonResponse = try await networkService.fetchData(from: url, method: .GET, headers: nil)
             pokemons = pokemonResponse.results
         } catch {
-            
-            // handle API call errors here
+            // Handle API call errors here
             print("Error fetching Pokemon data: \(error)")
         }
     }
-    
-
 
     var filteredPokemons: [Pokemon] {
         if searchText.isEmpty {
@@ -56,11 +55,8 @@ class HomeViewModel: ObservableObject {
                 return pokemons.sorted { $0.name.lowercased() > $1.name.lowercased() }
             case .random:
                 return pokemons.shuffled()
-            
             case .byID:
                 return pokemons
         }
-        
     }
-
 }
