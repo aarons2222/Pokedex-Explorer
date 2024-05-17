@@ -19,9 +19,10 @@ class DetailViewModel: ObservableObject {
     @MainActor
     func fetchPokemonDetail(pokemonId id: Int) async {
         guard let url = PokemonAPI.detailURL(for: id) else {
-            // Handle invalid URL
             return
         }
+
+        print("url \(url)")
 
         do {
             // Call fetchData with default values for method and headers

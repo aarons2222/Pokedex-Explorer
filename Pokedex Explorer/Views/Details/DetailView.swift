@@ -17,11 +17,17 @@ struct DetailView: View {
     private let id: Int
     private let haptic = UIImpactFeedbackGenerator(style: .light)
     var backgroundColor: Color
+    
+    @State var isLoading = true
+    @State var isViewVisible = false
+    
+    @State var cardColor: Color = .gray
 
     // Initialize DetailView with a background color and Pokémon ID
     init(backgroundColor: Color, id: Int) {
         self.id = id
         self.backgroundColor = backgroundColor
+        self.cardColor = ColorUtil.getColorForType(type: vm.pokemonDetails.name)
     }
     
     var body: some View {
@@ -31,66 +37,88 @@ struct DetailView: View {
                 .opacity(0.5)
                 .edgesIgnoringSafeArea(.all)
             
-            ScrollView {
-                VStack {
-                    // Display Pokémon image
-                    PokemonImageView(id: id, frame: 200)
-                    
-                    // Display Pokémon name
-                    Text(vm.pokemonDetails.name.firstUppercased)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    
-                    // Display Pokémon types
-                    HStack {
-                        ForEach(vm.pokemonDetails.types, id: \.type.name) { type in
-                            VStack {
-                                Text(type.type.name.firstUppercased)
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .background(
-                                        Capsule()
-                                            .fill(ColorUtil.getColorForType(type: type.type.name))
-                                            .frame(width: 100, height: 50)
-                                    )
+            
+            if isLoading {
+                ProgressView("Loading…")
+                    .onAppear {
+                        Task {
+                            do {
+                                await vm.fetchPokemonDetail(pokemonId: id)
+                                isLoading = false
+                                withAnimation(.easeIn(duration: 0.9)) {
+                                    isViewVisible = true
+                                }
                             }
-                            .frame(minWidth: 0, maxWidth: .infinity)
                         }
                     }
-                    .padding(.vertical)
-                    
-                    // Display height and weight
-                    HStack {
-                        CardView(value: "\(vm.pokemonDetails.height) cm", icon: "ruler")
-                            .frame(minWidth: 0, maxWidth: .infinity)
+            } else {
+                ScrollView {
+                    VStack {
+                        // Display Pokémon image
+                        PokemonImageView(id: id, frame: 200)
                         
-                        CardView(value: "\(vm.pokemonDetails.weight) kg", icon: "scalemass")
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                    }
-                    .padding(.vertical)
-                    
-                    // Display stats header
-                    HStack {
-                        Text("Stats")
-                            .font(.title3)
+                        // Display Pokémon name
+                        Text(vm.pokemonDetails.name.firstUppercased)
+                            .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
+                        
+                        // Display Pokémon types
+                        HStack {
+                            ForEach(vm.pokemonDetails.types, id: \.type.name) { type in
+                                VStack {
+                                    Text(type.type.name.firstUppercased)
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                        .background(
+                                            Capsule()
+                                                .fill(ColorUtil.getColorForType(type: type.type.name))
+                                                .opacity(0.8)
+                                                .frame(width: 100, height: 50)
+                                        )
+                                }
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                            }
+                        }
+                        .padding(.vertical)
+                        
+                        // Display height and weight
+                        HStack {
+                            DetailCardView(value: "\(vm.pokemonDetails.height) cm", icon: "ruler", backgroundColor: cardColor)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                            
+                            DetailCardView(value: "\(vm.pokemonDetails.weight) kg", icon: "scalemass", backgroundColor: cardColor)
+                                .frame(minWidth: 0, maxWidth: .infinity)
+                        }
+                        .padding(.vertical)
+                        
+                        // Display stats header
+                        HStack {
+                            Text("Stats")
+                                .font(.title3)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                            Spacer()
+                        }
+                        
+                        // Display Pokémon stats
+                        VStack(alignment: .leading, spacing: 20) {
+                            ForEach(vm.pokemonDetails.stats, id: \.stat.name) { stat in
+                                DetailCardView(name: vm.pokemonDetails.name, statName: stat.stat.name.capitalized, min: stat.baseStat, max: stat.maximumStat, backgroundColor: cardColor)
+                            }
+                        }
+                        
                         Spacer()
                     }
-                    
-                    // Display Pokémon stats
-                    VStack(alignment: .leading, spacing: 20) {
-                        ForEach(vm.pokemonDetails.stats, id: \.stat.name) { stat in
-                            CardView(name: vm.pokemonDetails.name, statName: stat.stat.name.capitalized, min: stat.baseStat, max: stat.maximumStat)
-                        }
-                    }
-                    
-                    Spacer()
+                    .padding(.horizontal, 25)
                 }
-                .padding(.horizontal, 25)
+                .opacity(isViewVisible ? 1 : 0)
             }
+            
+            
+            
+            
             
             // Header with back button
             VStack {
@@ -100,10 +128,9 @@ struct DetailView: View {
             }
         }
         .navigationBarHidden(true)
-        .task {
-            // Fetch Pokémon details when the view appears
-            await vm.fetchPokemonDetail(pokemonId: id)
-        }
+        
+    
+   
         .alert(isPresented: $errorHandler.showAlert) {
             Alert(
                 title: Text("Error"),
@@ -117,8 +144,9 @@ struct DetailView: View {
     
     /// A view displaying a card with various information.
     @ViewBuilder
-    func CardView(value: String? = nil, icon: String? = nil, name: String? = nil, statName: String? = nil, min: Int? = nil, max: Int? = nil) -> some View {
+    func DetailCardView(value: String? = nil, icon: String? = nil, name: String? = nil, statName: String? = nil, min: Int? = nil, max: Int? = nil, backgroundColor: Color) -> some View {
         RoundedRectangle(cornerRadius: 15)
+            
             .fill(name != nil ? ColorUtil.colorForName(name!).gradient : ColorUtil.colorForName(vm.pokemonDetails.name).gradient)
             .frame(height: 90)
             .overlay(alignment: .leading) {
@@ -137,6 +165,9 @@ struct DetailView: View {
                                     .font(.title2)
                                     .fontWeight(.medium)
                             }
+                        }
+                        .onAppear(){
+                            print("name \(name)")
                         }
                     
                     if let value = value {

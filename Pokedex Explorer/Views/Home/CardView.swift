@@ -12,6 +12,8 @@ import SwiftUI
 struct CardView: View {
     let name: String
     let url: String
+    
+    
 
     var body: some View {
         RoundedRectangle(cornerRadius: 15)

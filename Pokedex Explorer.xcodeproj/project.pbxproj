@@ -26,9 +26,6 @@
 		9377105C2BF4FA9100AC5535 /* ColorUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377105B2BF4FA9100AC5535 /* ColorUtility.swift */; };
 		9377105F2BF5068B00AC5535 /* SortingOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377105E2BF5068B00AC5535 /* SortingOrder.swift */; };
 		937710612BF5114B00AC5535 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710602BF5114B00AC5535 /* UINavigationController+Extension.swift */; };
-		937710682BF5468100AC5535 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 937710672BF5468100AC5535 /* Kingfisher */; };
-		9377106A2BF546A700AC5535 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 937710692BF546A700AC5535 /* Kingfisher */; };
-		9377106C2BF546AD00AC5535 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9377106B2BF546AD00AC5535 /* Kingfisher */; };
 		9377106E2BF562D300AC5535 /* DetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377106D2BF562D300AC5535 /* DetailViewModelTests.swift */; };
 		937710722BF5691B00AC5535 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710712BF5691B00AC5535 /* NetworkError.swift */; };
 		937710742BF5693C00AC5535 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710732BF5693C00AC5535 /* HTTPMethod.swift */; };
@@ -37,6 +34,7 @@
 		937710802BF6692200AC5535 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377107F2BF6692200AC5535 /* String+Extension.swift */; };
 		937710892BF6930C00AC5535 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937710882BF6930C00AC5535 /* ErrorHandler.swift */; };
 		9377108B2BF694C500AC5535 /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9377108A2BF694C500AC5535 /* SplashScreenView.swift */; };
+		937710C42BF7397500AC5535 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 937710C32BF7397500AC5535 /* Kingfisher */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				937710682BF5468100AC5535 /* Kingfisher in Frameworks */,
+				937710C42BF7397500AC5535 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,7 +101,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9377106A2BF546A700AC5535 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,7 +108,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9377106C2BF546AD00AC5535 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,7 +288,7 @@
 			);
 			name = "Pokedex Explorer";
 			packageProductDependencies = (
-				937710672BF5468100AC5535 /* Kingfisher */,
+				937710C32BF7397500AC5535 /* Kingfisher */,
 			);
 			productName = "Pokedex Explorer";
 			productReference = 93770FFD2BF2BA9D00AC5535 /* Pokedex Explorer.app */;
@@ -313,7 +309,6 @@
 			);
 			name = "Pokedex ExplorerTests";
 			packageProductDependencies = (
-				937710692BF546A700AC5535 /* Kingfisher */,
 			);
 			productName = "Pokedex ExplorerTests";
 			productReference = 9377100E2BF2BA9F00AC5535 /* Pokedex ExplorerTests.xctest */;
@@ -334,7 +329,6 @@
 			);
 			name = "Pokedex ExplorerUITests";
 			packageProductDependencies = (
-				9377106B2BF546AD00AC5535 /* Kingfisher */,
 			);
 			productName = "Pokedex ExplorerUITests";
 			productReference = 937710182BF2BA9F00AC5535 /* Pokedex ExplorerUITests.xctest */;
@@ -373,7 +367,7 @@
 			);
 			mainGroup = 93770FF42BF2BA9D00AC5535;
 			packageReferences = (
-				937710662BF5465C00AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				937710C22BF7397500AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 93770FFE2BF2BA9D00AC5535 /* Products */;
 			projectDirPath = "";
@@ -795,7 +789,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		937710662BF5465C00AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+		937710C22BF7397500AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
 			requirement = {
@@ -806,19 +800,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		937710672BF5468100AC5535 /* Kingfisher */ = {
+		937710C32BF7397500AC5535 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 937710662BF5465C00AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		937710692BF546A700AC5535 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 937710662BF5465C00AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		9377106B2BF546AD00AC5535 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 937710662BF5465C00AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			package = 937710C22BF7397500AC5535 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
